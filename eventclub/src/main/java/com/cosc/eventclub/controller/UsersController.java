@@ -33,9 +33,9 @@ public class UsersController {
 		return usersService.getUser(username);
 	}
 	
-	@GetMapping("/login")
-	public boolean login(@RequestParam String username,@RequestParam String password) {
-		return usersService.login(username,password);
+	@PostMapping("/login")
+	public boolean login(@RequestBody LoginDao loginDao) {
+		return usersService.login(loginDao.getUsername(),loginDao.getPassword());
 	}
 
 }
