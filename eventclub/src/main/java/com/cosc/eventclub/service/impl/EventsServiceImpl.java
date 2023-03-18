@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cosc.eventclub.controller.dao.AddEventDao;
 import com.cosc.eventclub.entity.ClubEntity;
 import com.cosc.eventclub.entity.EventsEntity;
+import com.cosc.eventclub.entity.UsersEntity;
 import com.cosc.eventclub.repository.ClubsRepository;
 import com.cosc.eventclub.repository.EventsRepository;
 import com.cosc.eventclub.repository.UsersRepository;
@@ -23,6 +24,8 @@ public class EventsServiceImpl implements EventsService {
 	private final ClubsRepository clubsRepository;
 	
 	private final UsersRepository usersRepo;
+	
+	private final String ORGANIZER="organizer";
 
 	public EventsServiceImpl(EventsRepository eventsRepository, ClubsRepository clubsRepository, UsersRepository usersRepo) {
 		this.eventsRepository = eventsRepository;
@@ -37,8 +40,12 @@ public class EventsServiceImpl implements EventsService {
 		entity.setEventPrice(event.getEventPrice());
 		entity.setDateAdded(new Date());
 		ClubEntity club=clubsRepository.findById(event.getClubId()).get();
-		if(club!=null) {
+		Integer[] userIds=event.getUserIds();
+		UsersEntity user=usersRepo.findById(userIds[0]).get();
+		if(club!=null && userIds.length==1 && user.getUserRole().equals(ORGANIZER)) 
+		{
 		entity.setClub(club);
+		entity.setUserIds(userIds);
 		return eventsRepository.save(entity);
 		}else {
 		return null;

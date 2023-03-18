@@ -27,6 +27,11 @@ public class UsersEntity {
 		this.password = password;
 	}
 	
+	public UsersEntity(int userId, String username, String userRole) {
+		this.userId = userId;
+		this.username = username;
+		this.userRole = userRole;
+	}
 	public int getUserId() {
 		return userId;
 	}

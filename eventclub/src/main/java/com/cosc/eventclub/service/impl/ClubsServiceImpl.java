@@ -1,11 +1,11 @@
 package com.cosc.eventclub.service.impl;
 
 import java.util.Date;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.cosc.eventclub.entity.ClubEntity;
+import com.cosc.eventclub.entity.UsersEntity;
 import com.cosc.eventclub.repository.ClubsRepository;
 import com.cosc.eventclub.repository.UsersRepository;
 import com.cosc.eventclub.service.ClubsService;
@@ -16,6 +16,8 @@ public class ClubsServiceImpl implements ClubsService {
 	private final ClubsRepository clubsRepository;
 	
 	private final UsersRepository usersRepository;
+	
+	private final String ORGANIZER="organizer";
 	
 	public ClubsServiceImpl(ClubsRepository clubsRepository,UsersRepository usersRepository) {
 		this.clubsRepository=clubsRepository;
@@ -28,7 +30,8 @@ public class ClubsServiceImpl implements ClubsService {
 			return null;
 		}
 		for(Integer id:club.getUserIds()) {
-			if(!usersRepository.findById(id).isPresent()) {
+			UsersEntity user=usersRepository.findById(id).get();
+			if(null==user && !user.getUserRole().equals(ORGANIZER)) {
 				return null;
 			}
 		}

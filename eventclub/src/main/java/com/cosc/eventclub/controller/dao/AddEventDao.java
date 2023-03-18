@@ -5,13 +5,15 @@ public class AddEventDao {
 	private String eventName;
 	private float eventPrice;
 	private int clubId;
+	private Integer[] userIds;
 	
 	public AddEventDao() {
 	}
-	public AddEventDao(String eventName, float eventPrice, int clubId) {
+	public AddEventDao(String eventName, float eventPrice, int clubId, Integer[] userIds) {
 		this.eventName = eventName;
 		this.eventPrice = eventPrice;
 		this.clubId = clubId;
+		this.userIds=userIds;
 	}
 	public String getEventName() {
 		return eventName;
@@ -30,6 +32,12 @@ public class AddEventDao {
 	}
 	public void setClubId(int clubId) {
 		this.clubId = clubId;
+	}
+	public Integer[] getUserIds() {
+		return userIds;
+	}
+	public void setUserIds(Integer[] userIds) {
+		this.userIds = userIds;
 	}
 
 }
