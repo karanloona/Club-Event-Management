@@ -1,11 +1,12 @@
 package com.cosc.eventclub.service.impl;
 
 import java.util.Date;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.cosc.eventclub.controller.dao.AddClubDao;
 import com.cosc.eventclub.entity.ClubEntity;
+import com.cosc.eventclub.entity.UsersEntity;
 import com.cosc.eventclub.repository.ClubsRepository;
 import com.cosc.eventclub.repository.UsersRepository;
 import com.cosc.eventclub.service.ClubsService;
@@ -17,23 +18,26 @@ public class ClubsServiceImpl implements ClubsService {
 	
 	private final UsersRepository usersRepository;
 	
+	private final String ORGANIZER="organizer";
+	
 	public ClubsServiceImpl(ClubsRepository clubsRepository,UsersRepository usersRepository) {
 		this.clubsRepository=clubsRepository;
 		this.usersRepository=usersRepository;
 	}
 	
 	@Override
-	public ClubEntity addClub(ClubEntity club) {
-		if(clubsRepository.findById(club.getClubId()).isPresent()) {
+	public ClubEntity addClub(AddClubDao club) {
+		if(clubsRepository.findByClubname(club.getClubname())!=null) {
 			return null;
 		}
-		for(Integer id:club.getUserIds()) {
-			if(!usersRepository.findById(id).isPresent()) {
+		for(int id:club.getUserIds()) {
+			UsersEntity user=usersRepository.findById(id).get();
+			if(null==user && !user.getUserRole().equals(ORGANIZER)) {
 				return null;
 			}
 		}
 		
-		return clubsRepository.save(new ClubEntity(club.getClubId(), club.getClubname(), club.getUserIds(),club.getEvenIds() , new Date()));
+		return clubsRepository.save(new ClubEntity(club.getClubname(), club.getUserIds(),new int[0] , new Date()));
 	}
 
 	@Override

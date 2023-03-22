@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cosc.eventclub.controller.dao.AddClubDao;
 import com.cosc.eventclub.entity.ClubEntity;
 import com.cosc.eventclub.service.ClubsService;
 
@@ -23,7 +24,7 @@ public class ClubsController {
 	}
 	
 	@PostMapping("/addClub")
-	public ClubEntity addClub(@RequestBody ClubEntity club) throws Exception {
+	public ClubEntity addClub(@RequestBody AddClubDao club) throws Exception {
 		
 		return clubsService.addClub(club);
 	}

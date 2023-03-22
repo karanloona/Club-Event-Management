@@ -8,6 +8,6 @@ public interface UsersService {
 
 	UsersEntity addUser(UsersEntity user);
 
-	boolean login(String username, String password);
+	UsersEntity login(String username, String password);
 
 }

@@ -25,12 +25,13 @@ public class UsersServiceImpl implements UsersService {
 		
 	}
 	@Override
-	public boolean login(String username, String password) {
+	public UsersEntity login(String username, String password) {
 		UsersEntity user=usersRepo.findByUsername(username);
+		System.out.println(user);
 		if(user!=null && user.getPassword().equals(password)) {
-			return true;
+			return new UsersEntity(user.getUserId(), user.getUsername(), user.getUserRole());
 		}
-		return false;
+		return null;
 	}
 
 }

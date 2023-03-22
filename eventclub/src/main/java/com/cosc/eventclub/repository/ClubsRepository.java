@@ -8,4 +8,5 @@ import com.cosc.eventclub.entity.ClubEntity;
 @Repository
 public interface ClubsRepository extends JpaRepository<ClubEntity, Integer> {
 
+    ClubEntity findByClubname(String clubname);
 }
