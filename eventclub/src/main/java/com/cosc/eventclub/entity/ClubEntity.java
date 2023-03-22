@@ -35,6 +35,13 @@ public class ClubEntity {
 		this.dateAdded = dateAdded;
 	}
 	
+	public ClubEntity(String clubname, int[] userIds, int[] evenIds, Date date) {
+		this.clubname=clubname;
+		this.userIds=userIds;
+		this.evenIds=evenIds;
+		this.dateAdded=date;
+
+	}
 	public ClubsBean getBeanfromEntity(ClubEntity club) {
 		return new ClubsBean(club.getClubId(), club.getClubname(), club.getUserIds(), club.getEvenIds(), club.getDateAdded()); 
 	}

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
+import com.cosc.eventclub.controller.dao.AddClubDao;
 import com.cosc.eventclub.entity.ClubEntity;
 import com.cosc.eventclub.entity.UsersEntity;
 import com.cosc.eventclub.repository.ClubsRepository;
@@ -25,18 +26,18 @@ public class ClubsServiceImpl implements ClubsService {
 	}
 	
 	@Override
-	public ClubEntity addClub(ClubEntity club) {
-		if(clubsRepository.findById(club.getClubId()).isPresent()) {
+	public ClubEntity addClub(AddClubDao club) {
+		if(clubsRepository.findByClubname(club.getClubname())!=null) {
 			return null;
 		}
-		for(Integer id:club.getUserIds()) {
+		for(int id:club.getUserIds()) {
 			UsersEntity user=usersRepository.findById(id).get();
 			if(null==user && !user.getUserRole().equals(ORGANIZER)) {
 				return null;
 			}
 		}
 		
-		return clubsRepository.save(new ClubEntity(club.getClubId(), club.getClubname(), club.getUserIds(),club.getEvenIds() , new Date()));
+		return clubsRepository.save(new ClubEntity(club.getClubname(), club.getUserIds(),new int[0] , new Date()));
 	}
 
 	@Override
